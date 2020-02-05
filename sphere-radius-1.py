@@ -1,12 +1,10 @@
-# Base project format.
-# Documentation https://github.com/raspberrypilearning/getting-started-with-minecraft-pi/blob/master/worksheet.md
-# 256 256 128
+
 from mcpi.minecraft import Minecraft
 from mcpi import block
 from time import sleep
 import math
 
-def clearAir(mc,x,y,z):
+def clearAir(mc):
     mc.setBlocks(-127,-63,-127,128,64,128,0)
     for k in range (-64,0):
         m = 2
@@ -26,28 +24,44 @@ def init():
     #x, y, z = mc.player.getPos()        
     return mc
     
-def plotTube(mc,x,y,z,scale):
+def plotTube(mc,x,y,z,scale,length):
     ladj =  int(scale / 2)
-    clearAir(mc,x,y,z)
-    for l in range (-ladj, ladj):
+    for l in range (-length, length):
         for theta in range (0,360,1):
             h = math.cos((3.141592 / 180) * theta ) * scale
             k = math.sin((3.141592 / 180) * theta ) * scale
             print(x+h,y+k,z+l)
             mc.setBlock(x+h,y+k,z+l,20)
+            mc.postToChat(length)
         #print()
 
+def plotSphere(mc,x,y,z,radius,m):
+	mc.postToChat("Hallo, here's your sphere")
+	m = 20 # glass
+	for h in range(radius*-1,radius):
+		for k in range(radius*-1, radius):
+			for l in range(radius*-1,radius):
+				if h**2 + k**2 + l**2 < radius**2:
+					mc.setBlock(x + h,y + k,z +l,m)
+
+
 def main():
-    mc = init()
-    x,y,z = mc.player.getPos()
-    plotTube(mc,x,y,z,10)
-    #mc.player.setPos(x+10,y,z-10)
+	mc = init()
+	x,y,z = mc.player.getPos()
+	clearAir(mc)
+	mc.player.setPos(0,0,0)
+	plotTube(mc,x,y,z,10,128)
+	m = 20
+	plotSphere(mc,x,y,z,10,m)
+	m = 0
+	plotSphere(mc,x,y,z,7,m)
+	mc.player.setPos(0,0,0)
     #matrixY(mc,x,y,z)
 
 if __name__ == "__main__":
-    main()
+	main()
 
-'''
+
 #API Blocks
 #====================
 #   AIR                   0
@@ -122,4 +136,6 @@ if __name__ == "__main__":
 #   FENCE_GATE          107
 #   GLOWING_OBSIDIAN    246
 #   NETHER_REACTOR_CORE 247
-'''
+
+
+
