@@ -1,76 +1,62 @@
+
 from mcpi.minecraft import Minecraft
 from mcpi import block
 from time import sleep
-import sys
 import math
 
 def clearAir(mc):
-    #mc.setBlocks(-127,-63,-127,128,64,128,0)
-    mc.setBlocks(-127,-3,-127,128,64,128,0)
-    for k in range (-10,0,1):
+    mc.setBlocks(-127,-63,-127,128,64,128,0)
+    for k in range (-64,0):
         m = 2
-        if k < -5:
+        if k < -20:
             m = 7
         if k > -3 and k < -1 :
             m = 3
-        mc.setBlocks(-127,k,-127,127,k,127,m)
+        mc.setBlocks(-127,-63,-127,127,-62,127,m)
+    
+    
     mc.postToChat("World Cleared!!!!")
     
+
 def init():
-    ip = sys.argv[1]
-    #mc = Minecraft.create("127.0.0.1", 4711)
+    ip = "192.168.7.226"
     mc = Minecraft.create(ip, 4711)
     mc.setting("world_immutable",True)
-    mc.postToChat(ip)
     #x, y, z = mc.player.getPos()        
     return mc
+    
+def plotTube(mc,x,y,z,scale,length):
+    ladj =  int(scale / 2)
+    for l in range (-length, length):
+        for theta in range (0,360,1):
+            h = math.cos((3.141592 / 180) * theta ) * scale
+            k = math.sin((3.141592 / 180) * theta ) * scale
+            print(x+h,y+k,z+l)
+            mc.setBlock(x+h,y+k,z+l,20)
+            #mc.postToChat(length)
+        #print()
 
-def plotSphereSurface(mc,x,y,z,r,m):
-	mc.postToChat("Sphere Surface")
+def plotSphere(mc,x,y,z,radius,m):
+	mc.postToChat("Hallo, here's your sphere")
 	m = 20 # glass
-	for theta in range (0,360):
-		rad = (3.141592 / 180) * theta
-		h = math.cos(rad)*r
-		k = math.sin(rad)*r
-		for zeta in range (0,360):
-			radz = (3.141592 / 180) * zeta
-			l = math.cos(radz) * r
-			mc.setBlock(x + h,y + k,z +l,m)
-			print(h,k,l)
-
-def plotSphereTube(mc,x,y,z,r,m):
-	mc.postToChat("Sphere Surface")
-	m = 20 # glass
-	for theta in range (0,360):
-		rad = (3.141592 / 180) * theta
-		h = math.cos(rad)*r
-		k = math.sin(rad)*r
-		for zeta in range (0,360):
-			radz = (3.141592 / 180) * zeta
-			l = math.cos(radz) * r
-			mc.setBlock(x + h,y + k,z +l,m)
-			print(h,k,l)
-
-def plotSphereSolid(mc,x,y,z,r,m):
-	mc.postToChat("Sphere Solid")
-	m = 20 # glass
-	for h in range(r*-1,r):
-		for k in range(r*-1, r):
-			for l in range(r*-1,r):
-				hklCubed = h**2 + k**2 + l**2
-				if hklCubed < r**2:
+	for h in range(radius*-1,radius):
+		for k in range(radius*-1, radius):
+			for l in range(radius*-1,radius):
+				if h**2 + k**2 + l**2 < radius**2:
 					mc.setBlock(x + h,y + k,z +l,m)
-					print(h,k,l)
+
 
 def main():
 	mc = init()
 	x,y,z = mc.player.getPos()
 	clearAir(mc)
 	mc.player.setPos(0,0,0)
+	plotTube(mc,x,y,z,7,32)
 	m = 20
-	#plotSphereSolid(mc,0,20,0,10,m)
-	plotSphereSurface(mc,0,20,0,10,m)
-	mc.player.setPos(0,50,0)
+	#plotSphere(mc,x,y,z,7,m)
+	m = 0
+	#plotSphere(mc,x,y,z,7,m)
+	mc.player.setPos(0,0,0)
     #matrixY(mc,x,y,z)
 
 if __name__ == "__main__":

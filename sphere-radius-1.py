@@ -19,7 +19,8 @@ def clearAir(mc):
     
 
 def init():
-    mc = Minecraft.create("127.0.0.1", 4711)
+    ip = "192.168.7.226"
+    mc = Minecraft.create(ip, 4711)
     mc.setting("world_immutable",True)
     #x, y, z = mc.player.getPos()        
     return mc
@@ -50,9 +51,9 @@ def main():
 	x,y,z = mc.player.getPos()
 	clearAir(mc)
 	mc.player.setPos(0,0,0)
-	plotTube(mc,x,y,z,10,128)
+	plotTube(mc,x,y,z,7,32)
 	m = 20
-	plotSphere(mc,x,y,z,10,m)
+	plotSphere(mc,x,y,z,7,m)
 	m = 0
 	plotSphere(mc,x,y,z,7,m)
 	mc.player.setPos(0,0,0)
