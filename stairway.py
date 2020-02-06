@@ -3,24 +3,43 @@ from mcpi import block
 from time import sleep
 import math
 
+def clearAir(mc):
+    #mc.setBlocks(-127,-63,-127,128,64,128,0)
+    mc.setBlocks(-127,-3,-127,128,64,128,0)
+    for k in range (-10,0,1):
+        m = 2
+        if k < -5:
+            m = 7
+        if k > -3 and k < -1 :
+            m = 3
+        mc.setBlocks(-127,k,-127,127,k,127,m)
+    mc.postToChat("World Cleared!!!!")
+    
 def init():
     mc = Minecraft.create("127.0.0.1", 4711)
     mc.setting("world_immutable",True)
     #x, y, z = mc.player.getPos()    
     return mc
-    
-def clearAir(mc,x,y,z):
-    h = 50; l = 50
-    for y in range(-63,128):
-        mc.setBlocks(x-h,y, z-l, x+h,y,z+l,0)
-    mc.setBlocks(x-h,64, z-l, x+h,64,z+l,56)
 
-
+def stairs(mc,x,y,z,r,loops,m):
+    k = 0
+    for theta in range (0,loops):
+        s = 2
+        rad = (3.141592/180)*theta
+        h = math.cos(rad)*r
+        l = math.sin(rad)*r
+        #mc.setBlocks(x+h-s,y+k,z+l-s,x+h+s,y+k,z+l+s,m)
+        mc.setBlock(x+h,y+k,z+l,m)
+        k = k + 1
+        print(h,k,l)
     
 def main():
     mc = init()
     x,y,z = mc.player.getPos()
-    clearAir(mc,x,y,z)
+    clearAir(mc)
+    print(x,y,z)
+    #stairs(mc,x,y,z,r,loops,m):
+    stairs(mc,x,y,z,30,720,1)
     
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ import math
 
 def clearAir(mc):
     #mc.setBlocks(-127,-63,-127,128,64,128,0)
-    mc.setBlocks(-127,-2,-127,128,64,128,0)
+    mc.setBlocks(-127,-3,-127,128,64,128,0)
     for k in range (-3,0,1):
         m = 2
         if k < -20:
@@ -20,40 +20,40 @@ def init():
     mc.setting("world_immutable",True)
     #x, y, z = mc.player.getPos()        
     return mc
-    
-def plotTube(mc,x,y,z,scale,length):
-	mc.postToChat("Tube")
-	ladj =  int(scale / 2)
-	for l in range (-length, length):
-		for theta in range (0,360,1):
-			h = math.cos((3.141592 / 180) * theta ) * scale
-			k = math.sin((3.141592 / 180) * theta ) * scale
-			print(x+h,y+k,z+l)
-			mc.setBlock(x+h,y+k,z+l,20)
-        #print()
 
-def plotSphere(mc,x,y,z,radius,m):
+def plotSphere2(mc,x,y,z,radius,m):
 	mc.postToChat("Sphere")
-	m = 20 # glass
-	for h in range(radius*-1,radius):
-		for k in range(radius*-1, radius):
-			for l in range(radius*-1,radius):
-				if h**2 + k**2 + l**2 < radius**2:
+	#m = 1 # glass
+	for h in range(3,radius):
+		for k in range(3, radius):
+			for l in range(3 ,radius):
+				hklCubed = h**2 + k**2 + l**2
+				if hklCubed < radius**2:
 					mc.setBlock(x + h,y + k,z +l,m)
 					print(h,k,l)
 
+
+
+
+def plotSphere(mc,x,y,z,r,m):
+	mc.postToChat("Sphere")
+	m = 20 # glass
+	for h in range(r*-1,r):
+		for k in range(r*-1, r):
+			for l in range(r*-1,r):
+				hklCubed = h**2 + k**2 + l**2
+				if hklCubed < r**2:
+					mc.setBlock(x + h,y + k,z +l,m)
+					print(h,k,l)
 
 def main():
 	mc = init()
 	x,y,z = mc.player.getPos()
 	clearAir(mc)
 	mc.player.setPos(0,0,0)
-	plotTube(mc,0,0,0,10,100)
 	m = 20
-	plotSphere(mc,0,0,0,10,m)
-	m = 0
-	plotSphere(mc,0,0,0,7,m)
-	mc.player.setPos(0,0,0)
+	plotSphere2(mc,0,0,0,20,m)
+	mc.player.setPos(0,50,0)
     #matrixY(mc,x,y,z)
 
 if __name__ == "__main__":
