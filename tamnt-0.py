@@ -62,20 +62,24 @@ def truck(mc,x,y,z):
   X = ["      1111111   ",
        "      11    11  ",
        "      11    111 ",
-       "111111111111111 ",
-       "111111111111111 ",
+       "1111111111111112",
+       "1111111111111112",
        "1   11   11   11"]
-         #"0123456789ABCDEF"
+      #"0123456789ABCDEF"
   #print(X)
   for k in range (0,6):
-    for l  in range (0,15):
+    for l  in range (0,16):
       print(X[k][l],end="")
       theBlock = X[k][l]
+      m = 0
       if (theBlock == "1"):
-        theBlock = 49
-      else is:
-        theBlock = 0
-      mc.setBlocks(x-3,15-y-k,z+l,x+3,15-y-k,z+l,theBlock)
+        m = 6
+      if (theBlock == "2"):
+        m = 5
+      if m == 0:
+        mc.setBlocks(x-3,15-y-k,z+l,x+3,15-y-k,z+l,0)
+      else:
+        mc.setBlocks(x-3,15-y-k,z+l,x+3,15-y-k,z+l,35,m)
     print()
     
 def main():
