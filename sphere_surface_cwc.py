@@ -16,28 +16,26 @@ def init():
  return mc
 
 			
-def createSphere(mc,x,y,z,r):
-	N=200
-	lst = []
-	thetas = [(2*pi*i)/N for i in range(N)]
-	print("thetas", thetas)
-	phis = [(pi*i)/N for i in range(N)]
-	x1,y1,z1=mc.player.getPos()
-	for theta in thetas:
-		for phi in phis:
-			x = (r * sin(phi) * cos(theta)) + x1
-			y = r * sin(phi) * sin(theta) +y1
-			z = r * cos(phi) + z1	
-			mc.setBlock(x,y,z,57)
+def sphere(mc,x,y,z,r,inc):
+	inc = 5
+	for thetaX in range (0,360,inc):
+		xRad = thetaX * (pi / 180) 
+		for thetaY in range(0,360,inc):
+			yRad= thetaY * (pi / 180) 
+			print(xRad,yRad)
+			h = (r * sin(yRad) * cos(xRad))+ x 
+			k = (r * sin(yRad) * sin(xRad))+ y
+			l = r * cos(yRad) + z
+			mc.setBlock(h,k,l,57)
+			#print(x,y,z,h,k,l)
     
 def main():
- mc = init()
- #x,y,z = mc.player.getPos()
- #mc.setBlocks(x-5,y-1,z-5,x+5,y-1,z+5,4)
- createSphere(10,mc)
- #worldWalker(mc)
- #worldEater(mc)
- #mc.postToChat("Hondo21")
+	mc = init()
+	x,y,z = mc.player.getPos()
+	#createSphere(10,mc)
+	sphere(mc,x,y,z,5,1)
+	mc.player.setPos(x,y+6,z)
+	
 
 if __name__ == "__main__":
  main()
