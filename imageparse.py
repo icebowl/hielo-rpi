@@ -2,6 +2,7 @@ from mcpi.minecraft import Minecraft
 from mcpi import block
 from   time import sleep
 import random
+import sys
 from PIL import Image
 import matplotlib.pyplot as plt
 import math
@@ -33,13 +34,17 @@ def nearest_colour( subjects, query ):
 #print( nearest_colour( colours, (255, 255, 64) ) ) # white
 
 def init():
-	ipString = "127.0.0.1"
-	#ipString = "192.168.7.226"
-	#mc = Minecraft.create("127.0.0.1", 4711)
+	if len(sys.argv) <= 1:
+		ipString = "127.0.0.1"
+	else:
+		ipString = sys.argv[1]
+	print("IP ",ipString)
+	mc = Minecraft.create(ipString, 4711)
 	mc = Minecraft.create(ipString, 4711)
 	mc.setting("world_immutable",False)
 	#x, y, z = mc.player.getPos()  
 	return mc
+	
 def open_image(path):
   newImage = Image.open(path)
   return newImage
@@ -72,7 +77,8 @@ def main():
 	x,y,z=mc.player.getPos()
 	
 	#plt.imshow(img);
-	selection=input("what is the name of your file? must be in .png: ")
+	#selection=input("what is the name of your file? must be in .png: ")
+	selection="newton.jpg"
 	img = Image.open(selection);
 	img=img.convert('RGB')
 	px=img.load()
