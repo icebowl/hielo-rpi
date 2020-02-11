@@ -74,17 +74,16 @@ def tire(mc,x,y,z):
        "112211",
        " 1111 "]
       #"0123"
-  for k in range (0,6):
-    for l  in range (0,):
+  for k in range (0,4):
+    for l  in range (0,6):
       print(X[k][l],end="")
       theBlock = X[k][l]
       m = 0
       if (theBlock == "1"):
-        m = 6
+        m = 10
       if (theBlock == "2"):
-        m = 5
+        m = 12
       if m == 0:
-        print("m is zero")
         mc.setBlocks(x-1,y+k,z+l,x,y+k,z+l,0)
       else:
         mc.setBlocks(x-1,y+k,z+l,x,y+k,z+l,35,m)
@@ -123,7 +122,7 @@ def main():
   #clearAir(mc,x,y,z)
   #tunnels(mc)
   truck(mc,0,0,5)
-  tire(mc,-3,0,5)
+  tire(mc,-3,1,5)
   mc.player.setPos(-5,0,10)
 
 if __name__ == "__main__":
