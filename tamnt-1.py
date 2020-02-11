@@ -16,6 +16,9 @@ def init():
     #x, y, z = mc.player.getPos()        
     return mc
     
+def truckAir(mc,x,y,z):
+    mc.setBlocks(x-10,y,z+1,x+10,y+20,z+30,0)
+
 def clearAir(mc,x,y,z):
     mc.setBlocks(x-10,y-5,z-20,x+10,y+20,z+20,0)
     mc.setBlocks(-128,-3,-128,128,64,128,0)
@@ -59,35 +62,27 @@ def output2dspace(mc,mList,x,y,z):
                 theBlock = 3
             mc.setBlock(x,9+y-k,z+l,35,theBlock)
 
-def bed(mc,x,y,z,r):
-  X = ["111111",
-       "111111",
-       "111111",
-       "111111",
-       "111111",
-       "111111"]
-      #"012345"
 
 def tire(mc,x,y,z):
-  X = [" 1111 ",
-       "112211",
-       "112211",
-       " 1111 "]
+  X = [" 1 ",
+       "121",
+       " 1 "]
       #"0123"
-  for k in range (0,4):
-    for l  in range (0,6):
-      print(X[k][l],end="")
+  for k in range (0,3):
+    for l  in range (0,3):
+      #print(X[k][l],end="")
       theBlock = X[k][l]
-      m = 0
+      if (theBlock == " "):
+        m = -1
       if (theBlock == "1"):
-        m = 10
+        m = 0
       if (theBlock == "2"):
-        m = 12
-      if m == 0:
+        m = 1
+      if m == -1:
         mc.setBlocks(x-1,y+k,z+l,x,y+k,z+l,0)
       else:
         mc.setBlocks(x-1,y+k,z+l,x,y+k,z+l,35,m)
-    print()
+    #print()
     
     
 def truck(mc,x,y,z):
@@ -97,7 +92,7 @@ def truck(mc,x,y,z):
        "       11     111  ",
        "1111111111111111112",
        "1111111111111111112",
-       "1    11    111    2"]
+       "1   111   1111   12"]
       #"0123456789ABCDEF012"
  
 
@@ -107,28 +102,63 @@ def truck(mc,x,y,z):
       theBlock = X[k][l]
       m = 0
       if (theBlock == "1"):
-        m = 6
+        m = 13
       if (theBlock == "2"):
         m = 5
       if m == 0:
-        mc.setBlocks(x-3,6-y-k,z+l,x+3,6-y-k,z+l,0)
+        mc.setBlocks(x-3,y-k,z+l,x+3,y-k,z+l,0)
       else:
-        mc.setBlocks(x-3,6-y-k,z+l,x+3,6-y-k,z+l,35,m)
+        mc.setBlocks(x-3,y-k,z+l,x+3,y-k,z+l,35,m)
     print()
     
+def colors(mc,x,y,z):
+  done = 0
+  while(done < 32):
+    mc.setBlock(x,y+10,z+done,35,done)
+    done = done + 1
+    
+def axels(mc,x,y,z):
+  mc.setBlocks(x-5,y+1,z+8,x+4,y+1,z+8,57)
+  mc.setBlocks(x-5,y+1,z+8+5,x+4,y+1,z+8+5,57)
+  mc.setBlocks(x-5,y+1,z+8+5+7,x+4,y+1,z+8+5+7,57)
 def main():
   mc = init()
   x,y,z = mc.player.getPos()
   #clearAir(mc,x,y,z)
   #tunnels(mc)
-  truck(mc,0,0,5)
-  tire(mc,-3,1,5)
-  mc.player.setPos(-5,0,10)
+  truckAir(mc,x,y,z)
+  colors(mc,x,y,z)
+  truck(mc,x,y+7,z+5)
+  tire(mc,x+-3,y,z+7)
+  tire(mc,x-3,y,z+12)
+  tire(mc,x-3,y,z+19)
+  tire(mc,x+3,y,z+7)
+  tire(mc,x+3,y,z+12)
+  tire(mc,x+3,y,z+19)
+  axels(mc,x,y,z)
+  mc.player.setPos(x-9,y,z+10)
 
 if __name__ == "__main__":
     main()
 
 '''
+WOOL
+0 = white
+1 = orange
+2 = magenta 
+3 = sky blue
+4 = yellow
+5 = green
+6 = pink
+7 =  grey
+8 = light grey
+9 = cyan
+10 = pruple
+11 = darker blue
+12 = brown
+13 = green
+14 = red
+15 = black
 #API Blocks
 #====================
 #   AIR                   0
