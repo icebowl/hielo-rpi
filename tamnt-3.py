@@ -9,8 +9,8 @@ sin = math.sin
 cos = math.cos
 
 def init():
-    #ip = "192.168.7.84"
-    ip = "127.0.0.1"
+    ip = "192.168.7.226"
+    #ip = "127.0.0.1"
     mc = Minecraft.create(ip, 4711)
     mc.setting("world_immutable",True)
     #x, y, z = mc.player.getPos()        
@@ -31,22 +31,22 @@ def clearAir(mc,x,y,z):
         mc.setBlocks(-128,k,-128,127,k,127,m)
     mc.postToChat("World Cleared!!!!")
 
-def tunnels(mc):
+def tunnels(mc,d):
   #  x to -x
-  d = 5
+  print(d)
   ha = 7; ka = 7; la = 7
-  mc.setBlocks(127,ka,la,-127,-ka,-la,42)
-  mc.setBlocks(127,ka-1,la-1,-127,-ka+1,-la+1,0)  # clear air x to -x
+  mc.setBlocks(127,ka+d,la,-127,-ka+d,-la,42)
+  mc.setBlocks(127,ka-1+d,la-1,-127,-ka+1+d,-la+1,0)  # clear air x to -x
   #  z to -z
-  mc.setBlocks(ha,ka,127,-ha,-ka,-127,42)
-  mc.setBlocks(ha-1,ka-1,127,-ha+1,-ka+1,-127,0)#clear air
-  mc.setBlocks(127,ka-1,la-1,-127,-ka+1,-la+1,0)  # clear air x to -x
+  mc.setBlocks(ha,ka+d,127,-ha,-ka+d,-127,42)
+  mc.setBlocks(ha-1,ka-1+d,127,-ha+1,-ka+1+d,-127,0)#clear air
+  mc.setBlocks(127,ka-1+d,la-1,-127,-ka+1+d,-la+1,0)  # clear air x to -x
   # clear air
   mc.setBlocks(2,64,2,-2,-50,-2,0)
   
   #diamond pole and torch
-  mc.setBlocks(0,64,0,0,-50,0,57)
-  mc.setBlocks(1,64,0,1,-50,0,50)
+  mc.setBlocks(0,64,0,0,-62,0,57)
+  mc.setBlocks(1,64,0,1,-62,0,50)
   #mc.setBlocks(10,5,5,-10,-5,-5,0)
   #mc.setBlocks(3,10,3,-3,-5,-3,0)
   
@@ -125,10 +125,21 @@ def axels(mc,x,y,z):
 def main():
   mc = init()
   x,y,z = mc.player.getPos()
-  clearAir(mc,x,y,z)
-  tunnels(mc)
-  #truckAir(mc,x,y,z)
+  #clearAir(mc,x,y,z)
+  tunnels(mc,-10)
+  tunnels(mc,-25)
+  tunnels(mc,-40)
+  truckAir(mc,x,y,z)
   #colors(mc,x,y,z)
+  h = 0; k = 20; l = -20
+  truck(mc,h,k+7,l+5)
+  tire(mc,h+-3,k,l+7)
+  tire(mc,h-3,k,l+12)
+  tire(mc,h-3,k,l+19)
+  tire(mc,h+3,k,l+7)
+  tire(mc,h+3,k,l+12)
+  tire(mc,h+3,k,l+19)
+  axels(mc,h,k,l)
   '''
   truck(mc,x,y+7,z+5)
   tire(mc,x+-3,y,z+7)
@@ -139,7 +150,7 @@ def main():
   tire(mc,x+3,y,z+19)
   axels(mc,x,y,z)
   '''
-  mc.player.setPos(x+5,y+10,z)
+  mc.player.setPos(h,k+35,l)
 
 if __name__ == "__main__":
     main()
