@@ -33,25 +33,32 @@ def clearAir(mc,x,y,z):
 
 def tunnels(mc):
   #  x to -x
-  h = 128; k = 0; l = 0
-  ha = 7; ka = 7; za = 7
-  mc.setBlocks(h+ha,k+ka ,l+za,-1*h-ha,k-ka,l-za,42)
+  depth = 5
+  h = 0 ; k = depth; l = depth
+  hs = 128
+  ha = 7; ka = 7; la = 7
+  mc.setBlocks(127,ka,la,-127,-ka,-la,42)
+  mc.setBlocks(127,ka-1,la-1,-127,-ka+1,-la+1,0)
+  #mc.setBlocks(h+hs,k+ka,l+la,h-hs,k-ka,l-la,42)
   # clear air
-  h = 128; k = 0; l = 0
   ha = 7; ka = 7; za = 7
-  mc.setBlocks(h+ha,k+ka-1 ,l+za-1,-1*h-ha,k-ka+1,l-za+1,0)
+  #
   #  z to -z
-  h = 0; k = 0; l = 128
+  h = 0 ; k = depth; l = depth
   ha = 7; ka = 7; za = 7
-  mc.setBlocks(h+ha,k+ka,l+za,h-ha,k-ka,-1 * l-za,42)
+  #mc.setBlocks(h+ha,k+ka,l+za,h-ha,k-ka,-1 * l-za,42)
+  # torch 
+  for t in range (0, 120,5):
+    mc.setBlock(h,k,l,50)
   # clear air
-  mc.setBlocks(h+ha-1,k+ka-1,l+za,h-ha+1,k-ka+1,-1 *l-za,0)
-  mc.setBlocks(5,5,10,-5,-5,-10,0)
-  mc.setBlocks(10,5,5,-10,-5,-5,0)
-  mc.setBlocks(3,10,3,-3,-5,-3,0)
+  mc.setBlocks(2,64,2,-2,-50,-2,0)
+  mc.setBlocks(0,64,0,0,-50,0,57)
+  mc.setBlocks(1,64,0,1,-50,0,50)
+  #mc.setBlocks(10,5,5,-10,-5,-5,0)
+  #mc.setBlocks(3,10,3,-3,-5,-3,0)
   
   
-def output2dspace(mc,mList,x,y,z):
+def output2dspace(mc,mList,x,y,z):  
      for k in range (0,10):
         for l  in range (0,10):
             #print(mList[k][l],end="")
@@ -121,13 +128,15 @@ def axels(mc,x,y,z):
   mc.setBlocks(x-5,y+1,z+8,x+4,y+1,z+8,57)
   mc.setBlocks(x-5,y+1,z+8+5,x+4,y+1,z+8+5,57)
   mc.setBlocks(x-5,y+1,z+8+5+7,x+4,y+1,z+8+5+7,57)
+  
 def main():
   mc = init()
   x,y,z = mc.player.getPos()
   clearAir(mc,x,y,z)
   tunnels(mc)
-  truckAir(mc,x,y,z)
-  colors(mc,x,y,z)
+  #truckAir(mc,x,y,z)
+  #colors(mc,x,y,z)
+  '''
   truck(mc,x,y+7,z+5)
   tire(mc,x+-3,y,z+7)
   tire(mc,x-3,y,z+12)
@@ -136,7 +145,8 @@ def main():
   tire(mc,x+3,y,z+12)
   tire(mc,x+3,y,z+19)
   axels(mc,x,y,z)
-  mc.player.setPos(x-9,y,z+10)
+  '''
+  mc.player.setPos(x+5,y+10,z)
 
 if __name__ == "__main__":
     main()
